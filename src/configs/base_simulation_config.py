@@ -25,6 +25,8 @@ class BaseSimulationConfig(ABC):
         self._re_injection_probabilities = kwargs.get("_re_injection_probabilities", False)
         self._probe_method = kwargs.get("_probe_method", "L")
         self._transmission_probability = kwargs.get("_transmission_prob", 0.5)
+        self._initialization_count = 500_000
+        self._probe_tip_diameter = 1.5
         self._make_movie = kwargs.get("_make_movie", False)
 
     @property
@@ -162,6 +164,22 @@ class BaseSimulationConfig(ABC):
     @make_movie.setter
     def make_movie(self, value):
         self._make_movie = value
+
+    @property
+    def initialization_count(self):
+        return self._initialization_count
+
+    @initialization_count.setter
+    def initialization_count(self, value):
+        self._initialization_count = value
+
+    @property
+    def probe_tip_diameter(self):
+        return self._probe_tip_diameter
+
+    @probe_tip_diameter.setter
+    def probe_tip_diameter(self, value):
+        self._probe_tip_diameter = value
 
     def to_json(self):
         return json.dumps(self.__dict__)

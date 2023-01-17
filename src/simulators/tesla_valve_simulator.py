@@ -137,7 +137,7 @@ class TeslaValveSimulator(SimulatorBase):
         self._border_y = border[:, 1]  # + np.ones(len(border)) * 1.2
 
         self._setup_current_direction()
-        self._device_edges_count = len(self._edge_styles)
+        self.device_edges_count = len(self._edge_styles)
         self._box_range = [[-self._box_l, self._box_l], [-self._box_l, self._box_l]]
 
         self._setup_edges()

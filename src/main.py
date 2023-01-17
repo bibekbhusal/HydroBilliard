@@ -216,33 +216,19 @@ def simulate(sim_type: SupportedSimulation =
 
     simulator.calc_scatter_probability()
     simulator.update_body()
-    print(f"Calling calculate area again.")
     simulator.calc_area()
 
     if simulation_config.scattering_probability == 0.0:
-        simulator._update_scattering_probability(simulation_config.scattering_probability)
+        simulator.update_scattering_probability(simulation_config.scattering_probability)
 
-    if simulator._diffusive:
-        simulator._set_diffusive_edges()
+    if simulator.diffusive:
+        simulator.set_diffusive_edges()
     else:
-        simulator._set_mirror_edges()
+        simulator.set_mirror_edges()
 
-    simulator._update_particles()
+    simulator.update_particles()
 
-    # TODO: Looks similar to bulk scattering. Why is second half given negative velocity of the first half?
-    for index in range(int(simulator._n_part / 2)):
-        thetas = np.random.rand() * 2.0 * np.pi
-        simulator._v_x[index] = np.cos(thetas)
-        simulator._v_y[index] = np.sin(thetas)
-        # TODO: What relation of the "index" with "index + int(simulator._n_part / 2)"
-        simulator._v_x[index + int(simulator._n_part / 2)] = -np.cos(thetas)
-        simulator._v_y[index + int(simulator._n_part / 2)] = -np.sin(thetas)
-
-    # TODO: implement initial condition file
-    print(f"Starting simulation with Temp: {temperature}, Source-drain-ratio: {simulator._source_drain_ratio},"
-          f"E-min: {simulator._e_min}, Experiment particle density: {simulator._experimental_particle_density},"
-          f"Simulation particle density: {simulator._simulation_particle_density}, Scattering probability:"
-          f"{simulator._p_scatter}")
+    print(f"Starting simulation with Temp: {temperature}")
 
     output_dir = Path(output_path) / f"{TODAY.strftime('%Y%m%d-%H%M%S')}"
     output_dir.mkdir(parents=True, exist_ok=True)

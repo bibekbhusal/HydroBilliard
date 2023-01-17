@@ -62,15 +62,14 @@ class FullCircleSimulator(SimulatorBase):
 
         thetas = np.linspace(1.4 * np.pi, -0.4 * np.pi, 25)
 
-        self._border_x = np.cos(thetas) * radius
-        self._border_y = np.sin(thetas) * radius
+        self.border_x = np.cos(thetas) * radius
+        self.border_y = np.sin(thetas) * radius
 
-        self._border_x = np.append(self._border_x, np.array([x_c, x_i, -x_i, -x_c, self._border_x[0]]))
-        self._border_y = np.append(self._border_y, np.array([0, -y_i, -y_i, 0, self._border_y[0]]))
+        self.border_x = np.append(self.border_x, np.array([x_c, x_i, -x_i, -x_c, self.border_x[0]]))
+        self.border_y = np.append(self.border_y, np.array([0, -y_i, -y_i, 0, self.border_y[0]]))
 
-        # TODO: Where did this combination come from?
         self._edge_styles = [_DRAIN_EDGE] * 24 + [_MIRROR_EDGE] * 2 + [_SOURCE_EDGE] + [_MIRROR_EDGE] * 2
-        self._device_edges_count = len(self._edge_styles)
+        self.device_edges_count = len(self._edge_styles)
         self._box_range = [[-radius, radius], [-radius, radius]]
 
         self._setup_edges()
